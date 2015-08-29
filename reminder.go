@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -146,7 +147,19 @@ func getStatus() (*string, error) {
 
 	req.Header.Add("Cookie", "login_aliyunid_ticket="+string(LOGIN_ALIYUNID_TICKET))
 
-	client := &http.Client{}
+	/*
+		*.console.aliyun.com has a relatively worse certificate,
+		so we need to specify cipher and min tls version, for more info, see:
+		https://www.ssllabs.com/ssltest/analyze.html?d=renew.console.aliyun.com&hideResults=on
+	*/
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				CipherSuites: []uint16{tls.TLS_RSA_WITH_RC4_128_SHA},
+				MinVersion:   tls.VersionTLS10,
+			},
+		},
+	}
 	resp, err := client.Do(req)
 
 	if err != nil {
