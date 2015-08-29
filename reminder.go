@@ -183,6 +183,9 @@ func getStatus() (*string, error) {
 	}
 
 	if instances.Code != "200" || !instances.SuccessResponse {
+		if instances.Code == "ConsoleNeedLogin" {
+			log.Fatalln("Cookie is wrong or expired:", string(body))
+		}
 		return nil, errors.New(string(body))
 	}
 
