@@ -287,7 +287,8 @@ func notify(when string) {
 
 func init() {
 	flag.Usage = func() {
-		fmt.Println("AliyunReminder")
+		fmt.Println("AliyunReminder - Reminds you when your ECS expires.")
+		fmt.Println()
 		fmt.Println("Built with Flowdock token", string(FLOWDOCK_TOKEN[:6]), string(MADE))
 		fmt.Println("Source: https://github.com/caiguanhao/AliyunReminder")
 	}
