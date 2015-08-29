@@ -146,7 +146,7 @@ func getStatus() (*string, error) {
 		return nil, err
 	}
 
-	req.Header.Add("Cookie", "login_aliyunid_ticket="+string(LOGIN_ALIYUNID_TICKET))
+	req.Header.Add("Cookie", "login_aliyunid_ticket="+LOGIN_ALIYUNID_TICKET)
 
 	/*
 		*.console.aliyun.com has a relatively worse certificate,
@@ -203,7 +203,7 @@ func getStatus() (*string, error) {
 }
 
 func notifyFlowdock(content *string) error {
-	url := "https://api.flowdock.com/v1/messages/chat/" + string(FLOWDOCK_TOKEN)
+	url := "https://api.flowdock.com/v1/messages/chat/" + FLOWDOCK_TOKEN
 
 	body, err := json.Marshal(&FlowdockRequest{
 		UserName: "AliyunReminder",
@@ -292,7 +292,7 @@ func init() {
 	flag.Usage = func() {
 		fmt.Println("AliyunReminder - Reminds you when your ECS expires.")
 		fmt.Println()
-		fmt.Println("Built with Flowdock token", string(FLOWDOCK_TOKEN[:6]), string(MADE))
+		fmt.Println("Built with Flowdock token", FLOWDOCK_TOKEN[:6], MADE)
 		fmt.Println("Source: https://github.com/caiguanhao/AliyunReminder")
 	}
 	flag.Parse()

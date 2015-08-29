@@ -11,7 +11,7 @@ function str_to_array {
       if (i > 1) {
         printf(", ")
       }
-      printf("'\''%s'\''", chars[i])
+      printf("\\\\\\\"%s\\\\\\\"", chars[i])
     }
   }
   ')"
@@ -24,15 +24,15 @@ function update_access_key {
   str_to_array MADE
   awk "
   /LOGIN_ALIYUNID_TICKET/ {
-    print \"var LOGIN_ALIYUNID_TICKET = []byte{${LOGIN_ALIYUNID_TICKET}}\"
+    print \"var LOGIN_ALIYUNID_TICKET = strings.Join([]string{${LOGIN_ALIYUNID_TICKET}}, \\\"\\\")\"
     next
   }
   /FLOWDOCK_TOKEN/ {
-    print \"var FLOWDOCK_TOKEN = []byte{${FLOWDOCK_TOKEN}}\"
+    print \"var FLOWDOCK_TOKEN = strings.Join([]string{${FLOWDOCK_TOKEN}}, \\\"\\\")\"
     next
   }
   /MADE/ {
-    print \"var MADE = []byte{${MADE}}\"
+    print \"var MADE = strings.Join([]string{${MADE}}, \\\"\\\")\"
     next
   }
   {
