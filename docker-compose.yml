@@ -1,0 +1,9 @@
+build:
+  image: golang:1.5.0
+  command: ["go", "build"]
+  working_dir: '/go/src/github.com/caiguanhao/AliyunReminder'
+  volumes:
+    - '.:/go/src/github.com/caiguanhao/AliyunReminder'
+
+app:
+  build: .

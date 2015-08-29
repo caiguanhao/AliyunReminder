@@ -51,8 +51,9 @@ done
 update_access_key
 
 if test -n "$BUILD_DOCKER"; then
-  docker-compose up
+  docker-compose up build
   docker-compose rm --force -v
+  docker-compose build app
 else
   go build
 fi
