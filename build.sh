@@ -21,6 +21,7 @@ function str_to_array {
 function update_access_key {
   str_to_array LOGIN_ALIYUNID_TICKET
   str_to_array FLOWDOCK_TOKEN
+  str_to_array MADE
   awk "
   /LOGIN_ALIYUNID_TICKET/ {
     print \"var LOGIN_ALIYUNID_TICKET = []byte{${LOGIN_ALIYUNID_TICKET}}\"
@@ -28,6 +29,10 @@ function update_access_key {
   }
   /FLOWDOCK_TOKEN/ {
     print \"var FLOWDOCK_TOKEN = []byte{${FLOWDOCK_TOKEN}}\"
+    next
+  }
+  /MADE/ {
+    print \"var MADE = []byte{${MADE}}\"
     next
   }
   {
@@ -48,6 +53,7 @@ while test -z "$FLOWDOCK_TOKEN"; do
   read -s FLOWDOCK_TOKEN
   echo
 done
+MADE="on $(date '+%Y-%m-%d %H:%M:%S') ($(git rev-parse --short HEAD))"
 update_access_key
 
 if test -n "$BUILD_DOCKER"; then
@@ -60,4 +66,5 @@ fi
 
 LOGIN_ALIYUNID_TICKET=""
 FLOWDOCK_TOKEN=""
+MADE=""
 update_access_key

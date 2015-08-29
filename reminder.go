@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"errors"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -282,6 +283,15 @@ func notify(when string) {
 			log.Println("Successfully sent to flowdock")
 		}
 	}
+}
+
+func init() {
+	flag.Usage = func() {
+		fmt.Println("AliyunReminder")
+		fmt.Println("Built with Flowdock token", string(FLOWDOCK_TOKEN[:6]), string(MADE))
+		fmt.Println("Source: https://github.com/caiguanhao/AliyunReminder")
+	}
+	flag.Parse()
 }
 
 func main() {
